@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sport_unity/screens/login_screen.dart';
 import 'package:sport_unity/screens/map_screen.dart';
 
-const String supabaseUrl = 'https://msrpnpvlllljkxrywbsy.supabase.co';
-const String supabaseAnonKey =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zcnBucHZsbGxsamt4cnl3YnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NzcwNjIsImV4cCI6MjA4OTI1MzA2Mn0.q0i8O7Li1McNRM5WYLfVNuRGdbikMlhnpdkXXhd-wpI';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
+  final supabaseUrl = dotenv.env['SUPABASE_URL'];
+  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+
+  if (supabaseUrl == null || supabaseAnonKey == null) {
+    throw Exception('Variables de entorno no configuradas. Revisa el archivo .env');
+  }
 
   await Supabase.initialize(
     url: supabaseUrl,

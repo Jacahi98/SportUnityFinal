@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sport_unity/services/supabase_service.dart';
-import 'package:sport_unity/screens/add_activity_screen.dart';
+import 'add_activity_screen.dart';
+import 'login_screen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -46,6 +47,12 @@ class _MapScreenState extends State<MapScreen> {
 
   void _logout() async {
     await supabaseService.signOut();
+    if (mounted) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
+    }
   }
 
   void _navigateToAddActivity() async {

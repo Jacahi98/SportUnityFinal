@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_unity/services/supabase_service.dart';
+import 'map_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,6 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
         emailController.text.trim(),
         passwordController.text,
       );
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const MapScreen()),
+        );
+      }
     } catch (e) {
       setState(() {
         errorMessage = e.toString();

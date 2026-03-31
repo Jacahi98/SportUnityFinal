@@ -48,11 +48,7 @@ class GeocodingService {
     }
   }
 
-  /// Geocodifica una dirección y retorna coordenadas validadas
-  /// Lanza una excepción si la dirección no existe
   static Future<GeocodingResult> geocodeAddress(String address) async {
-    print('[GeocodingService] Geocodificando: $address');
-
     try {
       final response = await http.get(
         Uri.parse('$_nominatimUrl?q=$address&format=json&limit=1'),
@@ -60,8 +56,6 @@ class GeocodingService {
           'User-Agent': 'sport_unity_app',
         },
       ).timeout(const Duration(seconds: 10));
-
-      print('[GeocodingService] Status: ${response.statusCode}');
 
       if (response.statusCode != 200) {
         throw Exception('Error en geocodificación: ${response.statusCode}');
@@ -78,15 +72,12 @@ class GeocodingService {
       final lon = double.parse(firstResult['lon'].toString());
       final displayName = firstResult['display_name'] as String;
 
-      print('[GeocodingService] Encontrado: $displayName ($lat, $lon)');
-
       return GeocodingResult(
         latitude: lat,
         longitude: lon,
         displayName: displayName,
       );
     } catch (e) {
-      print('[GeocodingService] Error: $e');
       rethrow;
     }
   }

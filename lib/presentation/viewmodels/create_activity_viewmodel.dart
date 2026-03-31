@@ -29,13 +29,7 @@ class CreateActivityViewModel extends ChangeNotifier {
     required double latitude,
     required double longitude,
   }) async {
-    print('[CreateActivityViewModel] publishActivity iniciado');
-    print('[CreateActivityViewModel] Parámetros: sport=$sport, level=$level, title=$title, location=$location');
-
-    if (_isSubmitting) {
-      print('[CreateActivityViewModel] Ya está enviando');
-      return false;
-    }
+    if (_isSubmitting) return false;
 
     _isSubmitting = true;
     _errorMessage = null;
@@ -43,18 +37,14 @@ class CreateActivityViewModel extends ChangeNotifier {
 
     try {
       final user = Supabase.instance.client.auth.currentUser;
-      print('[CreateActivityViewModel] Usuario actual: ${user?.id}');
-
       if (user == null) {
         _errorMessage = 'No estás autenticado';
-        print('[CreateActivityViewModel] ERROR: Usuario es null');
         return false;
       }
 
       String? imageUrl;
       if (imageFile != null) {
         imageUrl = await _uploadImage(imageFile, user.id);
-        print('[CreateActivityViewModel] Imagen subida: $imageUrl');
       }
 
       final activity = SportActivity(
@@ -69,14 +59,9 @@ class CreateActivityViewModel extends ChangeNotifier {
         imageUrl: imageUrl,
       );
 
-      print('[CreateActivityViewModel] Activity creada: id=${activity.id}');
-      print('[CreateActivityViewModel] Llamando a _publishActivityUseCase...');
-
       await _publishActivityUseCase(activity, title: title, location: location);
-      print('[CreateActivityViewModel] Éxito');
       return true;
     } catch (e) {
-      print('[CreateActivityViewModel] Excepción: $e');
       _errorMessage = 'Error: ${e.toString().split('\n').first}';
       return false;
     } finally {

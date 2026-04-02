@@ -1,57 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:sport_unity/screens/login_screen.dart';
-import 'package:sport_unity/screens/map_screen.dart';
 
-void main() async {
+import 'app.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
 
   final supabaseUrl = dotenv.env['SUPABASE_URL'];
   final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
 
   if (supabaseUrl == null || supabaseAnonKey == null) {
-    throw Exception('Variables de entorno no configuradas. Revisa el archivo .env');
+    runApp(const _MissingConfigApp());
+    return;
   }
 
-  await Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabaseAnonKey,
-  );
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
 
-  runApp(const MyApp());
+  runApp(const SportUnityApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MissingConfigApp extends StatelessWidget {
+  const _MissingConfigApp();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SportUnity',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              'Faltan variables de entorno de Supabase.\n\n'
+              'Edita .env con tus credenciales',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       ),
-      home: const AuthChecker(),
     );
-  }
-}
-
-class AuthChecker extends StatelessWidget {
-  const AuthChecker({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final user = Supabase.instance.client.auth.currentUser;
-
-    if (user != null) {
-      return const MapScreen();
-    } else {
-      return const LoginScreen();
-    }
   }
 }

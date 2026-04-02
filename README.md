@@ -1,39 +1,36 @@
-# SportUnity
+# Sport Unity
 
-Aplicación móvil Flutter para crear y descubrir actividades deportivas en un mapa interactivo.
+App para compartir actividades deportivas con mapa y ubicación.
 
-## Características
+## Setup
 
-- Autenticación con email y contraseña usando Supabase
-- Mapa interactivo con OpenStreetMap
-- Crear actividades deportivas con ubicación, fecha y hora
-- Ver actividades de otros usuarios en el mapa
-- Seleccionar ubicación en mapa al crear actividades
+1. `flutter pub get`
+2. Copia `.env.example` a `.env` y añade tus credenciales de Supabase
+3. `flutter run`
 
-## Requisitos
+## Tecnología
 
-- Flutter 3.10+
-- Dart 3.10+
-- Supabase account
+- Flutter + Dart
+- Supabase (auth + database + storage)
+- Provider para state management
+- Flutter Map
 
-## Instalación
+## Features
 
-1. Clona el repositorio
-2. Copia `.env.example` a `.env` y completa con tus credenciales de Supabase
-3. Ejecuta `flutter pub get`
-4. En Supabase, ejecuta el SQL en `supabase/schema.sql`
-5. Ejecuta `flutter run`
+- Autenticación con Supabase
+- Crear actividades con foto y ubicación
+- Mapa interactivo
+- Ver detalles de actividades
+- Filtros (deporte, nivel, tiempo)
+- Perfil de usuario
 
-## Estructura
+## Problemas conocidos
 
-```
-lib/
-  ├── main.dart                 # Punto de entrada
-  ├── screens/
-  │   ├── login_screen.dart     # Pantalla de autenticación
-  │   ├── map_screen.dart       # Pantalla principal con mapa
-  │   └── add_activity_screen.dart  # Crear nueva actividad
-  └── services/
-      └── supabase_service.dart # Servicio de Supabase
-```
+- Las imágenes a veces no cargan bien en web (problema con codec)
+- El geocoding puede ser lento si Nominatim está saturado
 
+## Notas
+
+- El .env no está en git
+- Las tablas de Supabase tienen que estar creadas (activities, profiles, etc)
+- Las fotos se guardan en el bucket activity-images

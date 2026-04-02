@@ -115,11 +115,8 @@ App para compartir actividades deportivas con mapa y ubicación.
 - Ver detalles de actividades
 - Filtros (deporte, nivel, tiempo)
 - Perfil de usuario
+- Añadir amigos para ver actividades
 
-## Problemas conocidos
-
-- Las imágenes a veces no cargan bien en web (problema con codec)
-- El geocoding puede ser lento si Nominatim está saturado
 
 ## Notas
 

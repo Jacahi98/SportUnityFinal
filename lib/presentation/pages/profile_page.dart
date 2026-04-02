@@ -104,7 +104,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: double.infinity,
                   child: OutlinedButton.icon(
                     onPressed: () async {
+<<<<<<< HEAD
                       await context.read<AuthViewModel>().signOut();
+=======
+                      final authVM = context.read<AuthViewModel>();
+                      final nav = Navigator.of(context);
+                      await authVM.signOut();
+                      authVM.init();
+                      if (mounted) {
+                        nav.popUntil((route) => route.isFirst);
+                      }
+>>>>>>> jacahi
                     },
                     icon: const Icon(Icons.logout),
                     label: const Text('Cerrar sesión'),

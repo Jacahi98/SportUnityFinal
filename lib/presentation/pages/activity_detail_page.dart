@@ -186,6 +186,52 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                     ),
                   ],
                 ),
+<<<<<<< HEAD
+=======
+                if (widget.activity.tags.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    'Inclusión',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: widget.activity.tags
+                        .map((tag) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.pink[100],
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.favorite,
+                                    size: 14,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    tag,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                          color: Colors.pink[900],
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ],
+>>>>>>> jacahi
               ],
             ),
           );

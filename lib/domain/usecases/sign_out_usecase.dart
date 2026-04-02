@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import '../repositories/auth_repository.dart';
 
 class SignOutUseCase {
@@ -9,3 +10,16 @@ class SignOutUseCase {
     return _repository.signOut();
   }
 }
+=======
+import '../repositories/auth_repository.dart';
+
+class SignOutUseCase {
+  SignOutUseCase(this._repository);
+
+  final AuthRepository _repository;
+
+  Future<void> call() {
+    return _repository.signOut();
+  }
+}
+>>>>>>> jacahi

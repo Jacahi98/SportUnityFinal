@@ -19,7 +19,10 @@ class GeocodingResult {
 class GeocodingService {
   static const String _nominatimUrl = 'https://nominatim.openstreetmap.org/search';
 
+<<<<<<< HEAD
   /// Obtiene sugerencias de direcciones mientras el usuario escribe
+=======
+>>>>>>> jacahi
   static Future<List<GeocodingResult>> getSuggestions(String query) async {
     if (query.isEmpty) return [];
 

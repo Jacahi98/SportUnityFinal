@@ -88,12 +88,6 @@ Cada persona trabaja en su rama y hace PR a `main` cuando termina.
 
 ---
 
-## 📚 Documentación
-
-Ver la **TFG_SportUnity.pdf** para documentación completa del proyecto.
-
----
-
 **¡Bienvenido al equipo! 🚀**
 =======
 # Sport Unity

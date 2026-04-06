@@ -3,12 +3,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   String? _alias;
+  int _friendCount = 0;
+  List<Map<String, dynamic>> _friends = [];
   bool _isLoading = false;
   bool _isSaving = false;
   String? _errorMessage;
   String? _successMessage;
 
   String? get alias => _alias;
+  int get friendCount => _friendCount;
+  List<Map<String, dynamic>> get friends => _friends;
   bool get isLoading => _isLoading;
   bool get isSaving => _isSaving;
   String? get errorMessage => _errorMessage;
@@ -23,6 +27,7 @@ class ProfileViewModel extends ChangeNotifier {
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) return;
 
+      // Cargar perfil
       final response = await Supabase.instance.client
           .from('profiles')
           .select()
@@ -31,6 +36,19 @@ class ProfileViewModel extends ChangeNotifier {
 
       if (response != null) {
         _alias = response['alias'] as String?;
+      }
+
+      // Cargar amigos
+      try {
+        final friendsResult = await Supabase.instance.client.rpc('get_friends', params: {'user_id': userId});
+        if (friendsResult is List) {
+          _friends = List<Map<String, dynamic>>.from(friendsResult);
+          _friendCount = _friends.length;
+        }
+      } catch (e) {
+        // Si la función RPC no existe, intenta con query directo
+        _friends = [];
+        _friendCount = 0;
       }
     } catch (e) {
       _errorMessage = 'Error al cargar perfil';

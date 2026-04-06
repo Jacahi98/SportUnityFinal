@@ -76,6 +76,65 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(vm.successMessage!, style: const TextStyle(color: Colors.green)),
                   ),
+                // Contador de amigos
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.blue[200]!),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.people, color: Colors.blue),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${vm.friendCount} ${vm.friendCount == 1 ? 'amigo' : 'amigos'}',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // Lista de amigos
+                if (vm.friends.isNotEmpty) ...[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Tus amigos',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ...vm.friends.map((friend) {
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.grey[300],
+                          child: const Icon(Icons.person),
+                        ),
+                        title: Text(friend['alias'] as String? ?? 'Sin alias'),
+                        trailing: const Icon(Icons.check, color: Colors.green),
+                      ),
+                    );
+                  }),
+                ] else if (vm.friendCount == 0)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Text(
+                      'Aún no tienes amigos. ¡Busca amigos en la sección de amigos!',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                const SizedBox(height: 24),
                 // Guardar
                 SizedBox(
                   width: double.infinity,

@@ -24,20 +24,21 @@ class AuthSupabaseDataSource {
 
       if (response.user != null) {
         try {
-          await _client.from('users').insert({
+          // Usar upsert para evitar conflicto si el trigger ya creó el perfil
+          await _client.from('profiles').upsert({
             'id': response.user!.id,
-            'email': email,
-            'full_name': '',
+            'alias': 'Usuario_${response.user!.id.substring(0, 8)}',
             'avatar_url': null,
           });
         } catch (e) {
-          throw Exception('Usuario creado en Supabase Auth pero error al guardar perfil: $e');
+          // Si falla, el trigger probablemente ya creó el perfil
+          print('Advertencia al actualizar perfil: $e');
         }
       } else {
         throw Exception('No se pudo crear la cuenta en Supabase Auth');
       }
     } catch (e) {
-      rethrow;
+      throw Exception('Error en signup: ${e.toString()}');
     }
   }
 

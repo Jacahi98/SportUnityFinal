@@ -56,7 +56,8 @@ class CreateActivityViewModel extends ChangeNotifier {
         latitude: latitude,
         longitude: longitude,
         photos: [],
-        createdAt: dateTime,
+        createdAt: DateTime.now(),
+        eventDateTime: dateTime,
         imageUrl: imageUrl,
         tags: tags,
       );

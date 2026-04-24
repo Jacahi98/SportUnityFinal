@@ -33,6 +33,7 @@ class ActivitySupabaseDataSource {
       'location': location,
       'image_url': activity.imageUrl,
       'created_at': activity.createdAt.toIso8601String(),
+      'event_datetime': activity.eventDateTime.toIso8601String(),
       'tags': activity.tags,
     };
 

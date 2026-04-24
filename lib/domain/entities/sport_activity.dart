@@ -11,6 +11,7 @@ class SportActivity {
     required this.longitude,
     required this.photos,
     required this.createdAt,
+    required this.eventDateTime,
     this.location,
     this.imageUrl,
     this.tags = const [],
@@ -26,6 +27,7 @@ class SportActivity {
   final double longitude;
   final List<Uint8List> photos;
   final DateTime createdAt;
+  final DateTime eventDateTime;
   final String? location;
   final String? imageUrl;
   final List<String> tags;

@@ -26,7 +26,7 @@ class HomeViewModel extends ChangeNotifier {
   List<SportActivity> get activities {
     var filtered = _activities;
 
-    // Filtro temporal (ventana centrada en ahora)
+    // Filtro temporal (basado en cuándo ocurre la actividad)
     if (_timeFilter != 'all') {
       final now = DateTime.now();
       final pastLimit = now.subtract(const Duration(hours: 1));
@@ -40,7 +40,7 @@ class HomeViewModel extends ChangeNotifier {
           futureDuration = const Duration(hours: 24);
       }
       final futureLimit = now.add(futureDuration);
-      filtered = filtered.where((a) => a.createdAt.isAfter(pastLimit) && a.createdAt.isBefore(futureLimit)).toList();
+      filtered = filtered.where((a) => !a.eventDateTime.isBefore(pastLimit) && a.eventDateTime.isBefore(futureLimit)).toList();
     }
 
     if (_sportFilter != null) {

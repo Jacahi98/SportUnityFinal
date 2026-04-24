@@ -181,7 +181,7 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                     const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
                     const SizedBox(width: 8),
                     Text(
-                      _formatDate(widget.activity.createdAt),
+                      _formatDate(widget.activity.eventDateTime),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
